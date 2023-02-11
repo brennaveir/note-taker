@@ -1,6 +1,6 @@
-const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
 const express = require('express')
 const router = express.Router()
+const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
 const uuid = require("../helpers/uuid")
 
 //TODO: GET /api/notes should read the db.json file and return all saved notes as JSON
@@ -14,20 +14,22 @@ router.get('/', (req, res) => {
     //and then return the new note to the client
     //HINT- each notes will need a unique id when it's save(npm packages)
 router.post('/', (req, res) => {
-    const { title, description } = req.body
+    console.info(`${req.method} request received to post note`);
+    console.log(req.body)
+    const { title, text } = req.body
 
-    if (title && description) {
+    if (title && text) {
         const newNote = {
             title,
-            description,
+            text,
             id: uuid(),
         };
-
+console.log(newNote)
         readAndAppend(newNote, './db/db.json');
 
         const response = {
             status: 'success',
-            body: newNote
+            body: newNote,
         };
 
         res.json(response);
