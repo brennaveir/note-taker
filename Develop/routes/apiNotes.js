@@ -14,8 +14,32 @@ router.get('/', (req, res) => {
     //and then return the new note to the client
     //HINT- each notes will need a unique id when it's save(npm packages)
 router.post('/', (req, res) => {
+    const { title, description } = req.body
 
+    if (title && description) {
+        const newNote = {
+            title,
+            description,
+            notes_id: uuid(),
+        };
+
+        readAndAppend(newNote, './db/db.json');
+
+        const response = {
+            status: 'success',
+            body: newNote
+        };
+
+        res.json(response);
+    } else {
+        res.json("Error in posting note")
+    }
 })
+
+app.listen(PORT, () =>
+  console.log(`App listening at http://localhost:${PORT} 🚀`)
+);
+ module.exports = router;
 
 //TODO: DELETE /api/notes/:id should receive a query parameter containing the id of the note in order to delete. 
     //In order to delete a note, read all notes from the db.json file, remove the note with the given property,

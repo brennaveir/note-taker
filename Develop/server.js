@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const api = require('./routes/index.js');
-const routes = require("./routes")
+
 
 const PORT = 3001;
 
@@ -16,7 +16,14 @@ app.use(express.static('public'));
 
 
 //TODO: HTML routes
-
+ //TODO: GET /notes should return the notes.html file
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirName, '/public/notes.html'))
+})
+    //GET * should return the index.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirName, '/public/index.html'))
+})
    
 
 //TODO: API routes
@@ -26,4 +33,6 @@ app.use(express.static('public'));
 //TODO: BONUS add the delete route to the application
 //  
 
-app.use(routes);
+app.listen(PORT, () =>
+  console.log(`App listening at http://localhost:${PORT} 🚀`)
+);
