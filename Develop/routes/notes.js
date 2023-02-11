@@ -1,11 +1,11 @@
-const { readFromFile, readAndAppend } = require('./helpers/fsUtils');
+const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
 const express = require('express')
 const router = express.Router()
-const uuid = require("../helped/uuid")
+const uuid = require("../helpers/uuid")
 
 //TODO: GET /api/notes should read the db.json file and return all saved notes as JSON
 router.get('/', (req, res) => {
-    console.info(`${req.method} request received for feedback`);
+    console.info(`${req.method} request received for notes`);
     readFromFile('./db/db.json')
     .then((data) => res.json(JSON.parse(data)))
 })
@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
         const newNote = {
             title,
             description,
-            notes_id: uuid(),
+            id: uuid(),
         };
 
         readAndAppend(newNote, './db/db.json');
@@ -36,11 +36,10 @@ router.post('/', (req, res) => {
     }
 })
 
-app.listen(PORT, () =>
-  console.log(`App listening at http://localhost:${PORT} 🚀`)
-);
- module.exports = router;
-
 //TODO: DELETE /api/notes/:id should receive a query parameter containing the id of the note in order to delete. 
     //In order to delete a note, read all notes from the db.json file, remove the note with the given property,
     //and then rewrite all the notes to the db.json file
+
+ module.exports = router;
+
+
