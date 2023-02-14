@@ -15,7 +15,6 @@ router.get('/', (req, res) => {
     //each note has a unique id when it's saved
 router.post('/', (req, res) => {
     console.info(`${req.method} request received to post note`);
-    console.log(req.body)
     const { title, text } = req.body
 
     if (title && text) {
@@ -44,11 +43,10 @@ console.log(newNote)
     router.delete('/:id', (req, res) => {
         readFromFile('./db/db.json')
         .then((data) => {
-           let currentNotes = JSON.parse(data)
+           let currentNotes = JSON.parse(data);
            currentNotes = currentNotes.filter((note)=> 
            note.id !== req.params.id
            )
-           console.log(currentNotes)
            writeToFile( './db/db.json', currentNotes);
            res.json(currentNotes)
         })
