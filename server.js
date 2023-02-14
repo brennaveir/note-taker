@@ -13,12 +13,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-//GET * should return the index.html
+//GET * returns the index.html
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
 })
-//TODO: HTML routes
-//TODO: GET /notes should return the notes.html file
+//HTML routes
+//GET /notes returns the notes.html file
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 })
